@@ -25,7 +25,7 @@ class ExpressionResultTest: XCTestCase {
     }
 
     func testPerformanceExpression() {
-        self.measureBlock() {
+        self.measure() {
             let x = self.result.expression()
         }
     }
@@ -35,7 +35,7 @@ class ExpressionResultTest: XCTestCase {
     }
 
     func testPerformanceIsMatch() {
-        self.measureBlock() {
+        self.measure() {
             let match = self.result.isMatch()
         }
     }
@@ -47,7 +47,7 @@ class ExpressionResultTest: XCTestCase {
     }
 
     func testPerformanceMatchedTags() {
-        self.measureBlock() {
+        self.measure() {
             let tags = self.result.matchedTags()
         }
     }
@@ -59,7 +59,7 @@ class ExpressionResultTest: XCTestCase {
     }
 
     func testPerformanceUnmatchedTags() {
-        self.measureBlock() {
+        self.measure() {
             let tags = self.result.unmatchedTags()
         }
     }

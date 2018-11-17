@@ -20,7 +20,7 @@ class ExpressionRendererTest: XCTestCase {
     }
 
     func testPerformanceRender() {
-        self.measureBlock() {
+        self.measure() {
             for testVector in self.renderTestVectors() {
                 let string = self.renderer.render(testVector.expression)
             }
@@ -39,7 +39,7 @@ class ExpressionRendererTest: XCTestCase {
 
     func testPerformanceRenderFailureWithWildcardInPatternLiteral() {
         let expression = Dialekt.Pattern(PatternLiteral("foo*"))
-        self.measureBlock() {
+        self.measure() {
             let result = self.renderer.render(expression)
         }
     }

@@ -1,7 +1,7 @@
 import Foundation
 
 /// Renders an AST expression to an expression string.
-public class ExpressionRenderer: RendererProtocol, VisitorProtocol {
+open class ExpressionRenderer: RendererProtocol, VisitorProtocol {
     public init(wildcardString: String) {
         _wildcardString = wildcardString
     }
@@ -11,32 +11,32 @@ public class ExpressionRenderer: RendererProtocol, VisitorProtocol {
     }
 
     /// Render an expression to a string.
-    public func render(expression: ExpressionProtocol) -> String! {
+    open func render(_ expression: ExpressionProtocol) -> String! {
         return expression.accept(self)
     }
 
     /// Visit a LogicalAnd node.
-    public func visit(node: LogicalAnd) -> String! {
+    open func visit(_ node: LogicalAnd) -> String! {
         return "(" + implodeNodes("AND", node.children()) + ")"
     }
 
     /// Visit a LogicalOr node.
-    public func visit(node: LogicalOr) -> String! {
+    open func visit(_ node: LogicalOr) -> String! {
         return "(" + implodeNodes("OR", node.children()) + ")"
     }
 
     /// Visit a LogicalNot node.
-    public func visit(node: LogicalNot) -> String! {
+    open func visit(_ node: LogicalNot) -> String! {
         return "NOT " + node.child().accept(self)
     }
 
     /// Visit a Tag node.
-    public func visit(node: Tag) -> String! {
+    open func visit(_ node: Tag) -> String! {
         return escapeString(node.name())
     }
 
     /// Visit a pattern node.
-    public func visit(node: Pattern) -> String! {
+    open func visit(_ node: Pattern) -> String! {
         var string = ""
         for child in node.children() {
             if let result = child.accept(self) {
@@ -50,8 +50,8 @@ public class ExpressionRenderer: RendererProtocol, VisitorProtocol {
     }
 
     /// Visit a PatternLiteral node.
-    public func visit(node: PatternLiteral) -> String! {
-        if node.string().rangeOfString(_wildcardString, options: NSStringCompareOptions.LiteralSearch) != nil {
+    open func visit(_ node: PatternLiteral) -> String! {
+        if node.string().range(of: _wildcardString, options: NSString.CompareOptions.literal) != nil {
             // Implement a Result<T>/Failable<T> return type.
             // throw Exception "The pattern literal \"" + node.string() + "\" contains the wildcard string \"" + _wildcardString + "\"."
             // fatalError("The pattern literal contains the wildcard string.")
@@ -61,45 +61,51 @@ public class ExpressionRenderer: RendererProtocol, VisitorProtocol {
     }
 
     /// Visit a PatternWildcard node.
-    public func visit(node: PatternWildcard) -> String! {
+    open func visit(_ node: PatternWildcard) -> String! {
         return _wildcardString
     }
 
     /// Visit a EmptyExpression node.
-    public func visit(node: EmptyExpression) -> String! {
+    open func visit(_ node: EmptyExpression) -> String! {
         return "NOT " + _wildcardString
     }
 
-    private func implodeNodes(separator: String, _ nodes: [ExpressionProtocol]) -> String {
-        return (" " + separator + " ").join(
-            nodes.map {
-                $0.accept(self)
-            }
-        )
+    fileprivate func implodeNodes(_ separator: String, _ nodes: [ExpressionProtocol]) -> String {
+        
+        var s: String = ""
+        s = nodes.flatMap({$0.accept(self)}).joined(separator: " " + separator + " ")
+        return s
+        
+//        return (" " + separator + " ").join(
+//            nodes.map {
+//                $0.accept(self)
+//            }
+//        )
     }
 
-    private func escapeString(string: String) -> String {
-        let stringLower = string.lowercaseString
+    fileprivate func escapeString(_ string: String) -> String {
+        let stringLower = string.lowercased()
         if "and" == stringLower || "or" == stringLower || "not" == stringLower {
             return "\"" + string + "\""
         }
 
         var escapedString = ""
         let characters: [Character] = ["\\", "(", ")", "\""]
-        for char in string {
-            if contains(characters, char) {
-                escapedString += "\\" + char
+        for char in string.characters {
+            if characters.contains(char) {
+//            if contains(characters, char) {
+                escapedString += "\\" + String(char)
             } else {
-                escapedString.append(char)
+                escapedString.append(String(char))
             }
         }
 
-        if string != escapedString || escapedString.rangeOfCharacterFromSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) != nil {
+        if string != escapedString || escapedString.rangeOfCharacter(from: CharacterSet.whitespacesAndNewlines) != nil {
             return "\"" + escapedString + "\""
         }
 
         return escapedString
     }
 
-    private let _wildcardString: String
+    fileprivate let _wildcardString: String
 }

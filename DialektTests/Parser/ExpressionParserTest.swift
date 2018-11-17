@@ -26,7 +26,7 @@ class ExpressionParserTest: XCTestCase {
     }
 
     func testPerformanceParse() {
-        self.measureBlock() {
+        self.measure() {
             for testVector in self.parseTestVectors() {
                 let result = self.parser.parse(testVector.expression)
             }

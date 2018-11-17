@@ -15,7 +15,7 @@ class PatternWildcardTest: XCTestCase {
     }
 
     func testPerformanceAcceptVisitorProtocol() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.node.accept(self.mockVisitor)
         }
     }
@@ -28,7 +28,7 @@ class PatternWildcardTest: XCTestCase {
     }
 
     func testPerformanceAcceptPatternChildVisitorProtocol() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.node.accept(self.mockPatternChildVisitor)
         }
     }

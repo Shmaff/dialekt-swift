@@ -1,11 +1,11 @@
 import Dialekt
 
 class MockPatternChildVisitorProtocol: PatternChildVisitorProtocol {
-    func visit(node: PatternLiteral) -> String {
+    func visit(_ node: PatternLiteral) -> String {
         return "<PatternChildVisitorProtocol visit result: PatternLiteral>"
     }
 
-    func visit(node: PatternWildcard) -> String {
+    func visit(_ node: PatternWildcard) -> String {
         return "<PatternChildVisitorProtocol visit result: PatternWildcard>"
     }
 }

@@ -20,7 +20,7 @@ class LexerTest: XCTestCase {
     }
 
     func testPerformanceLex() {
-        self.measureBlock() {
+        self.measure() {
             for testVector in self.lexTestVectors() {
                 let result = self.lexer.lex(testVector.expression)
             }

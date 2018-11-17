@@ -1,10 +1,10 @@
 /// Protocol for pattern child visitors.
 public protocol PatternChildVisitorProtocol {
-    typealias PatternChildVisitorResultType
+    associatedtype PatternChildVisitorResultType
 
     /// Visit a PatternLiteral node.
-    func visit(node: PatternLiteral) -> PatternChildVisitorResultType
+    func visit(_ node: PatternLiteral) -> PatternChildVisitorResultType
 
     /// Visit a PatternWildcard node.
-    func visit(node: PatternWildcard) -> PatternChildVisitorResultType
+    func visit(_ node: PatternWildcard) -> PatternChildVisitorResultType
 }

@@ -1,29 +1,29 @@
 import Foundation
 
-public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChildVisitorProtocol {
+open class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChildVisitorProtocol {
     public init(caseSensitive: Bool = false, emptyIsWildcard: Bool = false) {
         _caseSensitive = caseSensitive
         _emptyIsWildcard = emptyIsWildcard
     }
 
     /// Evaluate an expression against a set of tags.
-    public func evaluate(expression: ExpressionProtocol, tags: [String]) -> EvaluationResult {
+    open func evaluate(_ expression: ExpressionProtocol, tags: [String]) -> EvaluationResult {
         _tags = tags
-        _expressionResults.removeAll(keepCapacity: true)
+        _expressionResults.removeAll(keepingCapacity: true)
         
         let result = EvaluationResult(
             expression.accept(self).isMatch(),
             _expressionResults
         )
         
-        _tags.removeAll(keepCapacity: true)
-        _expressionResults.removeAll(keepCapacity: true)
+        _tags.removeAll(keepingCapacity: true)
+        _expressionResults.removeAll(keepingCapacity: true)
 
         return result
     }
 
     /// Visit a LogicalAnd node.
-    public func visit(node: LogicalAnd) -> ExpressionResult {
+    open func visit(_ node: LogicalAnd) -> ExpressionResult {
         var matchedTags = [String]()
         var isMatch = true
         
@@ -36,15 +36,15 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
                 isMatch = false
             }
 
-            matchedTags.extend(
+            matchedTags.extend( // Value of type '[String]' has no member 'extend'
                 result.matchedTags().filter() {
-                    !contains(matchedTags, $0)
+                    !matchedTags.contains($0)
                 }
             )
         }
 
         let unmatchedTags = _tags.filter() {
-            !contains(matchedTags, $0)
+            !matchedTags.contains($0)
         }
 
         return createExpressionResult(
@@ -56,7 +56,7 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
     }
 
     /// Visit a LogicalOr node.
-    public func visit(node: LogicalOr) -> ExpressionResult {
+    open func visit(_ node: LogicalOr) -> ExpressionResult {
         var matchedTags = [String]()
         var isMatch = false
 
@@ -67,15 +67,15 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
                 isMatch = true
             }
 
-            matchedTags.extend(
+            matchedTags.extend( // Value of type '[String]' has no member 'extend'
                 result.matchedTags().filter() {
-                    !contains(matchedTags, $0)
+                    !matchedTags.contains($0)
                 }
             )
         }
 
         let unmatchedTags = _tags.filter() {
-            !contains(matchedTags, $0)
+            !matchedTags.contains($0)
         }
 
         return createExpressionResult(
@@ -87,7 +87,7 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
     }
 
     /// Visit a LogicalNot node.
-    public func visit(node: LogicalNot) -> ExpressionResult {
+    open func visit(_ node: LogicalNot) -> ExpressionResult {
         let childResult = node.child().accept(self)
 
         return createExpressionResult(
@@ -99,20 +99,20 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
     }
 
     /// Visit a Tag node.
-    public func visit(node: Tag) -> ExpressionResult {
+    open func visit(_ node: Tag) -> ExpressionResult {
         if _caseSensitive {
             return matchTags(node) {
                 return node.name() == $0
             }
         } else {
             return matchTags(node) {
-                return node.name().compare($0, options: NSStringCompareOptions.CaseInsensitiveSearch) == NSComparisonResult.OrderedSame
+                return node.name().compare($0, options: NSString.CompareOptions.caseInsensitive) == ComparisonResult.orderedSame
             }
         }
     }
 
     /// Visit a pattern node.
-    public func visit(node: Pattern) -> ExpressionResult {
+    open func visit(_ node: Pattern) -> ExpressionResult {
         var pattern = "^"
 
         for n in node.children() {
@@ -121,28 +121,29 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
 
         pattern += "$"
 
-        var options = NSStringCompareOptions.RegularExpressionSearch
+        var options = NSString.CompareOptions.regularExpression
         if !_caseSensitive {
-            options = NSStringCompareOptions.RegularExpressionSearch | NSStringCompareOptions.CaseInsensitiveSearch
+            options = [NSString.CompareOptions.regularExpression, NSString.CompareOptions.caseInsensitive]
+            //options = NSString.CompareOptions.RegularExpressionSearch | NSString.CompareOptions.CaseInsensitiveSearch
         }
 
         return matchTags(node) {
-            $0.rangeOfString(pattern, options: options) != nil
+            $0.range(of: pattern, options: options) != nil
         }
     }
 
     /// Visit a PatternLiteral node.
-    public func visit(node: PatternLiteral) -> String {
-        return NSRegularExpression.escapedPatternForString(node.string())
+    open func visit(_ node: PatternLiteral) -> String {
+        return NSRegularExpression.escapedPattern(for: node.string())
     }
     
     /// Visit a PatternWildcard node.
-    public func visit(node: PatternWildcard) -> String {
+    open func visit(_ node: PatternWildcard) -> String {
         return ".*"
     }
 
     /// Visit a EmptyExpression node.
-    public func visit(node: EmptyExpression) -> ExpressionResult {
+    open func visit(_ node: EmptyExpression) -> ExpressionResult {
         return createExpressionResult(
             node,
             isMatch: _emptyIsWildcard,
@@ -151,12 +152,12 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
         )
     }
 
-    private func matchTags(expression: ExpressionProtocol, predicate: (tag: String) -> Bool) -> ExpressionResult {
+    fileprivate func matchTags(_ expression: ExpressionProtocol, predicate: (_ tag: String) -> Bool) -> ExpressionResult {
         var matchedTags = [String]()
         var unmatchedTags = [String]()
 
         for tag in _tags {
-            if predicate(tag: tag) {
+            if predicate(tag) {
                 matchedTags.append(tag)
             } else {
                 unmatchedTags.append(tag)
@@ -171,7 +172,7 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
         )
     }
 
-    private func createExpressionResult(expression: ExpressionProtocol, isMatch: Bool, matchedTags: [String], unmatchedTags: [String]) -> ExpressionResult {
+    fileprivate func createExpressionResult(_ expression: ExpressionProtocol, isMatch: Bool, matchedTags: [String], unmatchedTags: [String]) -> ExpressionResult {
         let result = ExpressionResult(
             expression,
             isMatch,
@@ -184,8 +185,8 @@ public class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChi
         return result
     }
 
-    private let _caseSensitive: Bool
-    private let _emptyIsWildcard: Bool
-    private var _tags = [String]()
-    private var _expressionResults = [ExpressionResult]()
+    fileprivate let _caseSensitive: Bool
+    fileprivate let _emptyIsWildcard: Bool
+    fileprivate var _tags = [String]()
+    fileprivate var _expressionResults = [ExpressionResult]()
 }

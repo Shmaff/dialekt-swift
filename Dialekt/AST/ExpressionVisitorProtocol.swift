@@ -1,22 +1,22 @@
 /// Protocol for expression visitors.
 public protocol ExpressionVisitorProtocol {
-    typealias ExpressionVisitorResultType
+    associatedtype ExpressionVisitorResultType
 
     /// Visit a LogicalAnd node.
-    func visit(node: LogicalAnd) -> ExpressionVisitorResultType
+    func visit(_ node: LogicalAnd) -> ExpressionVisitorResultType
 
     /// Visit a LogicalOr node.
-    func visit(node: LogicalOr) -> ExpressionVisitorResultType
+    func visit(_ node: LogicalOr) -> ExpressionVisitorResultType
 
     /// Visit a LogicalNot node.
-    func visit(node: LogicalNot) -> ExpressionVisitorResultType
+    func visit(_ node: LogicalNot) -> ExpressionVisitorResultType
 
     /// Visit a Tag node.
-    func visit(node: Tag) -> ExpressionVisitorResultType
+    func visit(_ node: Tag) -> ExpressionVisitorResultType
 
     /// Visit a pattern node.
-    func visit(node: Pattern) -> ExpressionVisitorResultType
+    func visit(_ node: Pattern) -> ExpressionVisitorResultType
 
     /// Visit a EmptyExpression node.
-    func visit(node: EmptyExpression) -> ExpressionVisitorResultType
+    func visit(_ node: EmptyExpression) -> ExpressionVisitorResultType
 }

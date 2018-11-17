@@ -20,7 +20,7 @@ class EvaluatorTest: XCTestCase {
 
     func testPerformanceEvaluate() {
         self.evaluator = Evaluator()
-        self.measureBlock() {
+        self.measure() {
             for testVector in self.evaluateTestVectors() {
                 let result = self.evaluator.evaluate(
                     testVector.expression,
@@ -54,7 +54,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foo"]
 
         self.evaluator = Evaluator(caseSensitive: true)
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -93,7 +93,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foobar"]
 
         self.evaluator = Evaluator(caseSensitive: true)
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -117,7 +117,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foo"]
 
         self.evaluator = Evaluator(caseSensitive: false, emptyIsWildcard: true)
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -182,7 +182,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foo", "bar", "spam"]
 
         self.evaluator = Evaluator()
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -247,7 +247,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foo", "bar", "spam"]
 
         self.evaluator = Evaluator()
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -289,7 +289,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foo", "bar"]
 
         self.evaluator = Evaluator()
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -324,7 +324,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foo", "bar"]
 
         self.evaluator = Evaluator()
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -365,7 +365,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foo1", "foo2", "bar"]
 
         self.evaluator = Evaluator()
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -400,7 +400,7 @@ class EvaluatorTest: XCTestCase {
         let tagList = ["foo", "bar"]
 
         self.evaluator = Evaluator()
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluator.evaluate(
                 expression,
                 tags: tagList
@@ -411,31 +411,31 @@ class EvaluatorTest: XCTestCase {
     func evaluateTestVectors() -> [EvaluateTestVector] {
         return [
             EvaluateTestVector(
-                name: "Empty expression, Line: \(__LINE__)",
+                name: "Empty expression, Line: \(#line)",
                 expression: EmptyExpression(),
                 tags: ["foo"],
                 expected: false
             ),
             EvaluateTestVector(
-                name: "Tag expression, Line: \(__LINE__)",
+                name: "Tag expression, Line: \(#line)",
                 expression: Tag("foo"),
                 tags: ["foo"],
                 expected: true
             ),
             EvaluateTestVector(
-                name: "Tag expression, Line: \(__LINE__)",
+                name: "Tag expression, Line: \(#line)",
                 expression: Tag("foo"),
                 tags: ["bar"],
                 expected: false
             ),
             EvaluateTestVector(
-                name: "Tag expression, Line: \(__LINE__)",
+                name: "Tag expression, Line: \(#line)",
                 expression: Tag("foo"),
                 tags: ["foo", "bar"],
                 expected: true
             ),
             EvaluateTestVector(
-                name: "Pattern expression, Line: \(__LINE__)",
+                name: "Pattern expression, Line: \(#line)",
                 expression: Pattern(
                     PatternLiteral("foo"),
                     PatternWildcard()
@@ -444,7 +444,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     Tag("bar")
@@ -453,7 +453,7 @@ class EvaluatorTest: XCTestCase {
                 expected: false
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     Tag("bar")
@@ -462,7 +462,7 @@ class EvaluatorTest: XCTestCase {
                 expected: false
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     Tag("bar")
@@ -471,7 +471,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     Tag("bar")
@@ -480,7 +480,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     Tag("bar")
@@ -489,7 +489,7 @@ class EvaluatorTest: XCTestCase {
                 expected: false
             ),
             EvaluateTestVector(
-                name: "LogicalOr expression, Line: \(__LINE__)",
+                name: "LogicalOr expression, Line: \(#line)",
                 expression: LogicalOr(
                     Tag("foo"),
                     Tag("bar")
@@ -498,7 +498,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalOr expression, Line: \(__LINE__)",
+                name: "LogicalOr expression, Line: \(#line)",
                 expression: LogicalOr(
                     Tag("foo"),
                     Tag("bar")
@@ -507,7 +507,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalOr expression, Line: \(__LINE__)",
+                name: "LogicalOr expression, Line: \(#line)",
                 expression: LogicalOr(
                     Tag("foo"),
                     Tag("bar")
@@ -516,7 +516,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalOr expression, Line: \(__LINE__)",
+                name: "LogicalOr expression, Line: \(#line)",
                 expression: LogicalOr(
                     Tag("foo"),
                     Tag("bar")
@@ -525,7 +525,7 @@ class EvaluatorTest: XCTestCase {
                 expected: false
             ),
             EvaluateTestVector(
-                name: "LogicalNot expression, Line: \(__LINE__)",
+                name: "LogicalNot expression, Line: \(#line)",
                 expression: LogicalNot(
                     Tag("foo")
                 ),
@@ -533,7 +533,7 @@ class EvaluatorTest: XCTestCase {
                 expected: false
             ),
             EvaluateTestVector(
-                name: "LogicalNot expression, Line: \(__LINE__)",
+                name: "LogicalNot expression, Line: \(#line)",
                 expression: LogicalNot(
                     Tag("foo")
                 ),
@@ -541,7 +541,7 @@ class EvaluatorTest: XCTestCase {
                 expected: false
             ),
             EvaluateTestVector(
-                name: "LogicalNot expression, Line: \(__LINE__)",
+                name: "LogicalNot expression, Line: \(#line)",
                 expression: LogicalNot(
                     Tag("foo")
                 ),
@@ -549,7 +549,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalNot expression, Line: \(__LINE__)",
+                name: "LogicalNot expression, Line: \(#line)",
                 expression: LogicalNot(
                     Tag("foo")
                 ),
@@ -557,7 +557,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     LogicalNot(
@@ -568,7 +568,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     LogicalNot(
@@ -579,7 +579,7 @@ class EvaluatorTest: XCTestCase {
                 expected: true
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     LogicalNot(
@@ -590,7 +590,7 @@ class EvaluatorTest: XCTestCase {
                 expected: false
             ),
             EvaluateTestVector(
-                name: "LogicalAnd expression, Line: \(__LINE__)",
+                name: "LogicalAnd expression, Line: \(#line)",
                 expression: LogicalAnd(
                     Tag("foo"),
                     LogicalNot(

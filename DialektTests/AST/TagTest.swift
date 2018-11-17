@@ -12,7 +12,7 @@ class TagTest: XCTestCase {
     }
 
     func testPerformanceString() {
-        self.measureBlock() {
+        self.measure() {
             let name = self.expression.name()
         }
     }
@@ -25,7 +25,7 @@ class TagTest: XCTestCase {
     }
 
     func testPerformanceAcceptVisitorProtocol() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.expression.accept(self.mockVisitor)
         }
     }
@@ -38,7 +38,7 @@ class TagTest: XCTestCase {
     }
 
     func testPerformanceAcceptExpressionVisitorProtocol() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.expression.accept(self.mockExpressionVisitor)
         }
     }

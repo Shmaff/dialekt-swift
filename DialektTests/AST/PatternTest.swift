@@ -34,7 +34,7 @@ class PatternTest: XCTestCase {
     }
 
     func testPerformanceDefaults() {
-        self.measureBlock() {
+        self.measure() {
             let empty = self.expression.children().isEmpty
         }
     }
@@ -66,7 +66,7 @@ class PatternTest: XCTestCase {
     }
 
     func testPerformanceAcceptVisitorProtocol() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.expression.accept(self.mockVisitor)
         }
     }
@@ -79,7 +79,7 @@ class PatternTest: XCTestCase {
     }
 
     func testPerformanceAcceptExpressionVisitorProtocol() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.expression.accept(self.mockExpressionVisitor)
         }
     }

@@ -1,5 +1,5 @@
 /// The overall result of the evaluation of an expression.
-public class EvaluationResult {
+open class EvaluationResult {
     public init(
         _ isMatch: Bool,
         _ expressionResults: [ExpressionResult]
@@ -9,21 +9,21 @@ public class EvaluationResult {
 
         for result in expressionResults {
             // Only objects can be hashable, the expression() method returns a protocol.
-            _expressionResults[result.expression() as AbstractExpression] = result
+            _expressionResults[result.expression() as! AbstractExpression] = result
         }
     }
 
     /// Indicates whether or not the expression matched the tag set.
-    public func isMatch() -> Bool {
+    open func isMatch() -> Bool {
         return _isMatch
     }
 
     /// Fetch the result for an individual expression node from the AST.
-    public func resultOf(expression: ExpressionProtocol) -> ExpressionResult! {
+    open func resultOf(_ expression: ExpressionProtocol) -> ExpressionResult! {
         // Only objects can be hashable, expression is a protocol.
-        return _expressionResults[expression as AbstractExpression]
+        return _expressionResults[expression as! AbstractExpression]
     }
 
-    private let _isMatch: Bool
-    private let _expressionResults: [AbstractExpression: ExpressionResult]
+    fileprivate let _isMatch: Bool
+    fileprivate var _expressionResults: [AbstractExpression: ExpressionResult]
 }

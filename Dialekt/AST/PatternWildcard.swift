@@ -1,14 +1,14 @@
 /// Represents the actual wildcard portion of a pattern expression.
-public class PatternWildcard: PatternChildProtocol {
+open class PatternWildcard: PatternChildProtocol {
     public init() { }
 
     /// Pass this node to the appropriate method on the given visitor.
-    public func accept<T: VisitorProtocol>(visitor: T) -> T.VisitorResultType {
+    open func accept<T: VisitorProtocol>(_ visitor: T) -> T.VisitorResultType {
         return visitor.visit(self) as T.VisitorResultType
     }
 
     /// Pass this node to the appropriate method on the given visitor.
-    public func accept<T: PatternChildVisitorProtocol>(visitor: T) -> T.PatternChildVisitorResultType {
+    open func accept<T: PatternChildVisitorProtocol>(_ visitor: T) -> T.PatternChildVisitorResultType {
         return visitor.visit(self)
     }
 }

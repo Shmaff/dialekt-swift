@@ -15,7 +15,7 @@ class LogicalAndTest: XCTestCase {
     }
 
     func testPerformanceAcceptVisitorProtocol() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.expression.accept(self.mockVisitor)
         }
     }
@@ -28,7 +28,7 @@ class LogicalAndTest: XCTestCase {
     }
 
     func testPerformanceAcceptExpressionVisitorProtocol() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.expression.accept(self.mockExpressionVisitor)
         }
     }

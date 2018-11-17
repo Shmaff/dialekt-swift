@@ -1,7 +1,7 @@
 import Foundation
 
 /// Render an AST expression to a string representing the tree structure.
-public class TreeRenderer: RendererProtocol, VisitorProtocol {
+open class TreeRenderer: RendererProtocol, VisitorProtocol {
     public init(endOfLine: String) {
         _endOfLine = endOfLine
     }
@@ -11,17 +11,17 @@ public class TreeRenderer: RendererProtocol, VisitorProtocol {
     }
 
     /// Get the end-of-line string.
-    public func endOfLine() -> String {
+    open func endOfLine() -> String {
         return _endOfLine
     }
 
     /// Render an expression to a string.
-    public func render(expression: ExpressionProtocol) -> String! {
+    open func render(_ expression: ExpressionProtocol) -> String! {
         return expression.accept(self)
     }
 
     /// Visit a LogicalAnd node.
-    public func visit(node: LogicalAnd) -> String {
+    open func visit(_ node: LogicalAnd) -> String {
         return "AND" + _endOfLine + renderChildren(
             node.children().map {
                 $0.accept(self)
@@ -30,7 +30,7 @@ public class TreeRenderer: RendererProtocol, VisitorProtocol {
     }
 
     /// Visit a LogicalOr node.
-    public func visit(node: LogicalOr) -> String {
+    open func visit(_ node: LogicalOr) -> String {
         return "OR" + _endOfLine + renderChildren(
             node.children().map {
                 $0.accept(self)
@@ -39,17 +39,17 @@ public class TreeRenderer: RendererProtocol, VisitorProtocol {
     }
 
     /// Visit a LogicalNot node.
-    public func visit(node: LogicalNot) -> String {
+    open func visit(_ node: LogicalNot) -> String {
         return "NOT" + _endOfLine + indent("- " + node.child().accept(self))
     }
 
     /// Visit a Tag node.
-    public func visit(node: Tag) -> String {
+    open func visit(_ node: Tag) -> String {
         return "TAG " + encodeString(node.name())
     }
 
     /// Visit a Pattern node.
-    public func visit(node: Pattern) -> String {
+    open func visit(_ node: Pattern) -> String {
         return "PATTERN" + _endOfLine + renderChildren(
             node.children().map {
                 $0.accept(self)
@@ -58,51 +58,56 @@ public class TreeRenderer: RendererProtocol, VisitorProtocol {
     }
 
     /// Visit a PatternLiteral node.
-    public func visit(node: PatternLiteral) -> String {
+    open func visit(_ node: PatternLiteral) -> String {
         return "LITERAL " + encodeString(node.string())
     }
 
     /// Visit a PatternWildcard node.
-    public func visit(node: PatternWildcard) -> String {
+    open func visit(_ node: PatternWildcard) -> String {
         return "WILDCARD"
     }
 
     /// Visit a EmptyExpression node.
-    public func visit(node: EmptyExpression) -> String {
+    open func visit(_ node: EmptyExpression) -> String {
         return "EMPTY"
     }
 
-    private func renderChildren(children: [String]) -> String {
+    fileprivate func renderChildren(_ children: [String]) -> String {
         var output = ""
 
         for str in children {
             output += indent("- " + str) + _endOfLine
         }
 
-        return output.substringToIndex(
-            advance(output.endIndex, -countElements(_endOfLine))
+//        output.substringToIndex
+        
+//        return output.substringToIndex(
+//            advance(output.endIndex, -countElements(_endOfLine))
+//        )
+        let index = output.index(output.endIndex, offsetBy: -(_endOfLine.characters.count))
+        let subText = output.substring(to: index)
+        return subText
+    }
+
+    fileprivate func indent(_ string: String) -> String {
+        return "  " + string.replacingOccurrences(
+            of: _endOfLine,
+            with: " " + _endOfLine,
+            options: NSString.CompareOptions.literal
         )
     }
 
-    private func indent(string: String) -> String {
-        return "  " + string.stringByReplacingOccurrencesOfString(
-            _endOfLine,
-            withString: " " + _endOfLine,
-            options: NSStringCompareOptions.LiteralSearch
-        )
-    }
-
-    private func encodeString(string: String) -> String {
+    fileprivate func encodeString(_ string: String) -> String {
         // Swift/Objective-C json encoding keeps throwing exceptions and requires the string to be inside an Array?
         // I found this solution on Stack Overflow:
         // http://stackoverflow.com/questions/3020094/how-should-i-escape-strings-in-json
         var escapedString = ""
         escapedString += "\""
-        for char in string {
+        for char in string.characters {
             if char == "\\" || char == "\"" {
-                escapedString += "\\" + char
+                escapedString += "\\" + String(char)
             } else if char == "/" {
-                escapedString += "\\" + char
+                escapedString += "\\" + String(char)
             } else if char == "\t" {
                 escapedString += "\\t"
             } else if char == "\n" {
@@ -123,5 +128,5 @@ public class TreeRenderer: RendererProtocol, VisitorProtocol {
         return escapedString
     }
 
-    private let _endOfLine: String
+    fileprivate let _endOfLine: String
 }

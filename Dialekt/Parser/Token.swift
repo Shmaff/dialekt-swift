@@ -1,31 +1,31 @@
-public enum TokenType: Int, Printable {
-    case LogicalAnd
-    case LogicalOr
-    case LogicalNot
-    case Text
-    case OpenBracket
-    case CloseBracket
+public enum TokenType: Int, CustomStringConvertible {
+    case logicalAnd
+    case logicalOr
+    case logicalNot
+    case text
+    case openBracket
+    case closeBracket
 
     public var description: String {
         switch self {
-        case .LogicalAnd:
+        case .logicalAnd:
             return "AND operator"
-        case .LogicalOr:
+        case .logicalOr:
             return "OR operator"
-        case .LogicalNot:
+        case .logicalNot:
             return "NOT operator"
-        case .OpenBracket:
+        case .openBracket:
             return "open bracket"
-        case .CloseBracket:
+        case .closeBracket:
             return "close bracket"
-        case .Text:
+        case .text:
             return "tag"
         }
     }
 }
 
-public class Token {
-    public class var WildcardString: String {
+open class Token {
+    open class var WildcardString: String {
         return "*"
     }
 
@@ -45,12 +45,12 @@ public class Token {
         self.columnNumber = columnNumber
     }
     
-    public var tokenType: TokenType
-    public var value: String
-    public var startOffset: Int
-    public var endOffset: Int
-    public var lineNumber: Int
-    public var columnNumber: Int
+    open var tokenType: TokenType
+    open var value: String
+    open var startOffset: Int
+    open var endOffset: Int
+    open var lineNumber: Int
+    open var columnNumber: Int
 }
 
 // MARK: Equatable

@@ -5,13 +5,13 @@ import Foundation
 /// The expression must be a space-separated list of tags. The result is
 /// either EmptyExpression, a single Tag node, or a LogicalAnd node
 /// containing only Tag nodes.
-public class ListParser: AbstractParser, ParserProtocol {
+open class ListParser: AbstractParser, ParserProtocol {
 
     /// Parse a list of tags into an array.
     ///
     /// The expression must be a space-separated list of tags. The result is
     /// an array of strings.
-    public func parseAsArray(expression: String) -> [String]! {
+    open func parseAsArray(_ expression: String) -> [String]! {
         return parseAsArray(expression, lexer: Lexer())
     }
 
@@ -19,7 +19,7 @@ public class ListParser: AbstractParser, ParserProtocol {
     ///
     /// The expression must be a space-separated list of tags. The result is
     /// an array of strings.
-    public func parseAsArray(expression: String, lexer: LexerProtocol) -> [String]! {
+    open func parseAsArray(_ expression: String, lexer: LexerProtocol) -> [String]! {
         let result = parse(expression, lexer: lexer)
         if result == nil {
             return nil
@@ -45,11 +45,11 @@ public class ListParser: AbstractParser, ParserProtocol {
         startExpression()
 
         while _currentToken != nil {
-            if !expectToken(TokenType.Text) {
+            if !expectToken(TokenType.text) {
                 return nil
             }
 
-            if _currentToken == nil || _currentToken.value.rangeOfString(wildcardString) != nil {
+            if _currentToken == nil || _currentToken.value.range(of: wildcardString) != nil {
                 // Implement a Result<T>/Failable<T> return type.
                 // throw Exception "Unexpected wildcard string \"" + wildcardString + "\", in tag \"" + _currentToken.value + "\"."
 				// fatalError("Unexpected wildcard string in tag.")
@@ -68,7 +68,7 @@ public class ListParser: AbstractParser, ParserProtocol {
         endExpression(expression)
 
         if expression.children().count == 1 {
-            return expression.children()[0] as AbstractExpression
+            return expression.children()[0] as! AbstractExpression
         }
 
         return expression

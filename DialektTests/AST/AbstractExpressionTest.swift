@@ -11,7 +11,7 @@ class AbstractExpressionTest: XCTestCase {
     }
 
     func testPerformanceDefaults() {
-        self.measureBlock() {
+        self.measure() {
             self.node.firstToken()
             self.node.lastToken()
         }

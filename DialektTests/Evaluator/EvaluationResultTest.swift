@@ -26,7 +26,7 @@ class EvaluationResultTest: XCTestCase {
     }
 
     func testPerformanceIsMatch() {
-        self.measureBlock() {
+        self.measure() {
             let match = self.evaluationResult.isMatch()
         }
     }
@@ -48,7 +48,7 @@ class EvaluationResultTest: XCTestCase {
     }
 
     func testPerformanceResultOf() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluationResult.resultOf(self.expression)
         }
     }
@@ -58,7 +58,7 @@ class EvaluationResultTest: XCTestCase {
     }
 
     func testPerformanceResultOfWithUnknownExpression() {
-        self.measureBlock() {
+        self.measure() {
             let result = self.evaluationResult.resultOf(EmptyExpression())
         }
     }

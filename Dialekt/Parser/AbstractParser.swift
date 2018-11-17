@@ -1,5 +1,5 @@
-public class AbstractParser {
-    public var wildcardString: String
+open class AbstractParser {
+    open var wildcardString: String
 
     public init(_ wildcardString: String) {
         self.wildcardString = wildcardString
@@ -13,19 +13,19 @@ public class AbstractParser {
     }
 
     /// Parse an expression.
-    public func parse(expression: String) -> AbstractExpression! {
+    open func parse(_ expression: String) -> AbstractExpression! {
         return parse(expression, lexer: Lexer())
     }
 
     /// Parse an expression using a specific lexer.
-    public func parse(expression: String, lexer: LexerProtocol) -> AbstractExpression! {
+    open func parse(_ expression: String, lexer: LexerProtocol) -> AbstractExpression! {
         return parseTokens(
             lexer.lex(expression)
         )
     }
 
     /// Parse an expression that has already been tokenized.
-    public func parseTokens(tokens: [Token]) -> AbstractExpression! {
+    open func parseTokens(_ tokens: [Token]) -> AbstractExpression! {
         if (tokens.isEmpty) {
             return EmptyExpression()
         }
@@ -56,13 +56,14 @@ public class AbstractParser {
         return nil
     }
 
-    internal func expectToken(types: TokenType...) -> Bool {
+    internal func expectToken(_ types: TokenType...) -> Bool {
         if _currentToken == nil {
             // Implement a Result<T>/Failable<T> return type.
             // throw ParseException "Unexpected end of input, expected " + formatExpectedTokenNames(types) + "."
             // fatalError("Unexpected end of input, expected more tokens.")
             return false
-        } else if !contains(types, _currentToken.tokenType) {
+        } else if !types.contains(_currentToken.tokenType) {
+        //} else if !contains(types, _currentToken.tokenType) {
             // Implement a Result<T>/Failable<T> return type.
             // throw ParseException "Unexpected " + _currentToken.tokenType.description + ", expected " + formatExpectedTokenNames(types) + "."
             // fatalError("Unexpected token, expected other tokens.")
@@ -71,12 +72,14 @@ public class AbstractParser {
         return true
     }
 
-    internal func formatExpectedTokenNames(types: TokenType...) -> String {
+    internal func formatExpectedTokenNames(_ types: TokenType...) -> String {
         var result = types[0].description
         var index = 1
 
         if (types.count > 1) {
-            for (; index < types.count; ++index) {
+            for i in index..<types.count {
+                index = i + 1
+            //for (; index < types.count; index += 1) {
                 result += ", " + types[index].description
             }
         }
@@ -90,7 +93,9 @@ public class AbstractParser {
     internal func nextToken() {
         _previousToken = _currentToken
 
-        if ++_tokenIndex >= _tokens.count {
+        _tokenIndex += 1
+        
+        if _tokenIndex >= _tokens.count {
             _currentToken = nil
         } else {
             _currentToken = _tokens[_tokenIndex]
@@ -103,17 +108,17 @@ public class AbstractParser {
     }
 
     /// Record the end of an expression.
-    internal func endExpression(expression: ExpressionProtocol) {
+    internal func endExpression(_ expression: ExpressionProtocol) {
         expression.setTokens(
             _tokenStack.removeLast(),
             _previousToken
         )
     }
 
-    private var _tokenStack: [Token]
-    private var _tokens: [Token]
-    private var _tokenIndex: Int
-    private var _previousToken: Token!
+    fileprivate var _tokenStack: [Token]
+    fileprivate var _tokens: [Token]
+    fileprivate var _tokenIndex: Int
+    fileprivate var _previousToken: Token!
 
     internal var _currentToken: Token!
 }

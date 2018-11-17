@@ -29,7 +29,7 @@ class TreeRendererTest: XCTestCase {
     }
 
     func testPerformanceRender() {
-        self.measureBlock() {
+        self.measure() {
             for testVector in self.renderTestVectors() {
                 let string = self.renderer.render(testVector.expression)
             }

@@ -32,7 +32,7 @@ class AbstractPolyadicExpressionTest: XCTestCase {
     }
 
     func testPerformanceDefaults() {
-        self.measureBlock() {
+        self.measure() {
             let empty = self.node.children().isEmpty
         }
     }

@@ -9,8 +9,8 @@ public protocol ExpressionProtocol: NodeProtocol {
     func lastToken() -> Token!
 
     /// Set the delimiting tokens for this expression.
-    func setTokens(firstToken: Token, _ lastToken: Token)
+    func setTokens(_ firstToken: Token, _ lastToken: Token)
 
     /// Pass this node to the appropriate method on the given visitor.
-    func accept<T: ExpressionVisitorProtocol>(visitor: T) -> T.ExpressionVisitorResultType
+    func accept<T: ExpressionVisitorProtocol>(_ visitor: T) -> T.ExpressionVisitorResultType
 }

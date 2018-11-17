@@ -1,5 +1,5 @@
 /// An AST node that represents a pattern-match expression.
-public class Pattern: AbstractExpression, ExpressionProtocol {
+open class Pattern: AbstractExpression {
     public init(_ children: [PatternChildProtocol]) {
         _children = children
 
@@ -11,24 +11,24 @@ public class Pattern: AbstractExpression, ExpressionProtocol {
     }
 
     /// Add a child to this node.
-    public func add(node: PatternChildProtocol) {
+    open func add(_ node: PatternChildProtocol) {
         _children.append(node)
     }
 
     /// Fetch an array of this node's children.
-    public func children() -> [PatternChildProtocol] {
+    open func children() -> [PatternChildProtocol] {
         return _children
     }
 
     /// Pass this node to the appropriate method on the given visitor.
-    public override func accept<T: VisitorProtocol>(visitor: T) -> T.VisitorResultType {
+    open override func accept<T: VisitorProtocol>(_ visitor: T) -> T.VisitorResultType {
         return visitor.visit(self) as T.VisitorResultType
     }
 
     /// Pass this node to the appropriate method on the given visitor.
-    public override func accept<T: ExpressionVisitorProtocol>(visitor: T) -> T.ExpressionVisitorResultType {
+    open override func accept<T: ExpressionVisitorProtocol>(_ visitor: T) -> T.ExpressionVisitorResultType {
         return visitor.visit(self)
     }
 
-    private var _children: [PatternChildProtocol]
+    fileprivate var _children: [PatternChildProtocol]
 }

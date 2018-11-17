@@ -1,5 +1,5 @@
 /// A base class providing common functionality for polyadic operators.
-public class AbstractPolyadicExpression: AbstractExpression {
+open class AbstractPolyadicExpression: AbstractExpression {
     public init(_ children: [ExpressionProtocol]) {
         _children = children
 
@@ -11,14 +11,14 @@ public class AbstractPolyadicExpression: AbstractExpression {
     }
 
     /// Add a child expression to this operator.
-    public func add(expression: ExpressionProtocol) {
+    open func add(_ expression: ExpressionProtocol) {
         _children.append(expression)
     }
 
     /// Fetch an array of this operator's children.
-    public func children() -> [ExpressionProtocol] {
+    open func children() -> [ExpressionProtocol] {
         return _children
     }
 
-    private var _children: [ExpressionProtocol]
+    fileprivate var _children: [ExpressionProtocol]
 }

@@ -1,35 +1,35 @@
 import Dialekt
 
 class MockVisitorProtocol: VisitorProtocol {
-    func visit(node: LogicalAnd) -> String {
+    func visit(_ node: LogicalAnd) -> String {
         return "<VisitorProtocol visit result: LogicalAnd>"
     }
 
-    func visit(node: LogicalOr) -> String {
+    func visit(_ node: LogicalOr) -> String {
         return "<VisitorProtocol visit result: LogicalOr>"
     }
 
-    func visit(node: LogicalNot) -> String {
+    func visit(_ node: LogicalNot) -> String {
         return "<VisitorProtocol visit result: LogicalNot>"
     }
 
-    func visit(node: Tag) -> String {
+    func visit(_ node: Tag) -> String {
         return "<VisitorProtocol visit result: Tag>"
     }
 
-    func visit(node: Dialekt.Pattern) -> String {
+    func visit(_ node: Dialekt.Pattern) -> String {
         return "<VisitorProtocol visit result: Pattern>"
     }
 
-    func visit(node: EmptyExpression) -> String {
+    func visit(_ node: EmptyExpression) -> String {
         return "<VisitorProtocol visit result: EmptyExpression>"
     }
 
-    func visit(node: PatternLiteral) -> String {
+    func visit(_ node: PatternLiteral) -> String {
         return "<VisitorProtocol visit result: PatternLiteral>"
     }
 
-    func visit(node: PatternWildcard) -> String {
+    func visit(_ node: PatternWildcard) -> String {
         return "<VisitorProtocol visit result: PatternWildcard>"
     }
 }

@@ -26,7 +26,7 @@ class ListParserTest: XCTestCase {
     }
 
     func testPerformanceParse() {
-        self.measureBlock() {
+        self.measure() {
             for testVector in self.parseTestVectors() {
                 let result = self.parser.parse(testVector.expression)
             }
@@ -46,7 +46,7 @@ class ListParserTest: XCTestCase {
     }
 
     func testPerformanceParseAsArray() {
-        self.measureBlock() {
+        self.measure() {
             for testVector in self.parseTestVectors() {
                 let result = self.parser.parseAsArray(testVector.expression)
             }
