@@ -6,7 +6,7 @@ class AbstractPolyadicExpressionTest: XCTestCase {
     var node = AbstractPolyadicExpression()
 
     func testInit() {
-        var test = AbstractPolyadicExpression(
+        let test = AbstractPolyadicExpression(
             [
                 EmptyExpression(),
                 EmptyExpression(),
@@ -18,7 +18,7 @@ class AbstractPolyadicExpressionTest: XCTestCase {
     }
 
     func testConvienceInit() {
-        var test = AbstractPolyadicExpression(
+        let test = AbstractPolyadicExpression(
             EmptyExpression(),
             EmptyExpression(),
             EmptyExpression()
@@ -33,7 +33,7 @@ class AbstractPolyadicExpressionTest: XCTestCase {
 
     func testPerformanceDefaults() {
         self.measure() {
-            let empty = self.node.children().isEmpty
+            _ = self.node.children().isEmpty
         }
     }
 
