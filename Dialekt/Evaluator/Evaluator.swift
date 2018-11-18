@@ -26,8 +26,6 @@ open class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChild
     open func visit(_ node: LogicalAnd) -> ExpressionResult {
         var matchedTags = [String]()
         var isMatch = true
-        
-        var x = [String:String]()
 
         for n in node.children() {
             let result = n.accept(self)
