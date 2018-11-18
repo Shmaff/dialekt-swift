@@ -17,7 +17,7 @@ class LogicalNotTest: XCTestCase {
 
     func testPerformanceChild() {
         self.measure() {
-            let child = self.expression.child()
+            _ = self.expression.child()
         }
     }
 
@@ -30,7 +30,7 @@ class LogicalNotTest: XCTestCase {
 
     func testPerformanceAcceptVisitorProtocol() {
         self.measure() {
-            let result = self.expression.accept(self.mockVisitor)
+            _ = self.expression.accept(self.mockVisitor)
         }
     }
 
@@ -43,7 +43,7 @@ class LogicalNotTest: XCTestCase {
 
     func testPerformanceAcceptExpressionVisitorProtocol() {
         self.measure() {
-            let result = self.expression.accept(self.mockExpressionVisitor)
+            _ = self.expression.accept(self.mockExpressionVisitor)
         }
     }
 }

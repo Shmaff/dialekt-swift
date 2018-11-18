@@ -84,7 +84,7 @@ open class TreeRenderer: RendererProtocol, VisitorProtocol {
 //        return output.substringToIndex(
 //            advance(output.endIndex, -countElements(_endOfLine))
 //        )
-        let index = output.index(output.endIndex, offsetBy: -(_endOfLine.characters.count))
+        let index = output.index(output.endIndex, offsetBy: -(_endOfLine.count))
         let subText = output.substring(to: index)
         return subText
     }
@@ -103,7 +103,7 @@ open class TreeRenderer: RendererProtocol, VisitorProtocol {
         // http://stackoverflow.com/questions/3020094/how-should-i-escape-strings-in-json
         var escapedString = ""
         escapedString += "\""
-        for char in string.characters {
+        for char in string {
             if char == "\\" || char == "\"" {
                 escapedString += "\\" + String(char)
             } else if char == "/" {

@@ -20,13 +20,13 @@ class ExpressionResultTest: XCTestCase {
     func testExpression() {
         XCTAssertEqual(
             self.expression,
-            self.result.expression() as AbstractExpression
+            self.result.expression() as! AbstractExpression
         )
     }
 
     func testPerformanceExpression() {
         self.measure() {
-            let x = self.result.expression()
+            _ = self.result.expression()
         }
     }
 
@@ -36,7 +36,7 @@ class ExpressionResultTest: XCTestCase {
 
     func testPerformanceIsMatch() {
         self.measure() {
-            let match = self.result.isMatch()
+            _ = self.result.isMatch()
         }
     }
 
@@ -48,7 +48,7 @@ class ExpressionResultTest: XCTestCase {
 
     func testPerformanceMatchedTags() {
         self.measure() {
-            let tags = self.result.matchedTags()
+            _ = self.result.matchedTags()
         }
     }
 
@@ -60,7 +60,7 @@ class ExpressionResultTest: XCTestCase {
 
     func testPerformanceUnmatchedTags() {
         self.measure() {
-            let tags = self.result.unmatchedTags()
+            _ = self.result.unmatchedTags()
         }
     }
 }

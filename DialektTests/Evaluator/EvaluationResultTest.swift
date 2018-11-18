@@ -27,7 +27,7 @@ class EvaluationResultTest: XCTestCase {
 
     func testPerformanceIsMatch() {
         self.measure() {
-            let match = self.evaluationResult.isMatch()
+            _ = self.evaluationResult.isMatch()
         }
     }
 
@@ -36,7 +36,7 @@ class EvaluationResultTest: XCTestCase {
             self.expression
         ).expression()
 
-        XCTAssertEqual(self.expression, result as AbstractExpression)
+        XCTAssertEqual(self.expression, result as! AbstractExpression)
 
         XCTAssertTrue(result is Tag)
         if let tagExpression = result as? Tag {
@@ -49,7 +49,7 @@ class EvaluationResultTest: XCTestCase {
 
     func testPerformanceResultOf() {
         self.measure() {
-            let result = self.evaluationResult.resultOf(self.expression)
+            _ = self.evaluationResult.resultOf(self.expression)
         }
     }
 
@@ -59,7 +59,7 @@ class EvaluationResultTest: XCTestCase {
 
     func testPerformanceResultOfWithUnknownExpression() {
         self.measure() {
-            let result = self.evaluationResult.resultOf(EmptyExpression())
+            _ = self.evaluationResult.resultOf(EmptyExpression())
         }
     }
 }

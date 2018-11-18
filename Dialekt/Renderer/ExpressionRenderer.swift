@@ -91,7 +91,7 @@ open class ExpressionRenderer: RendererProtocol, VisitorProtocol {
 
         var escapedString = ""
         let characters: [Character] = ["\\", "(", ")", "\""]
-        for char in string.characters {
+        for char in string {
             if characters.contains(char) {
 //            if contains(characters, char) {
                 escapedString += "\\" + String(char)

@@ -15,7 +15,7 @@ class ExpressionParserTest: XCTestCase {
 
     func testParse() {
         for testVector in self.parseTestVectors() {
-            let result = self.parser.parse(testVector.expression)
+            let result = self.parser.parse(testVector.expression)!
 
             XCTAssertEqual(
                 self.renderer.render(testVector.expected),
@@ -28,7 +28,7 @@ class ExpressionParserTest: XCTestCase {
     func testPerformanceParse() {
         self.measure() {
             for testVector in self.parseTestVectors() {
-                let result = self.parser.parse(testVector.expression)
+                _ = self.parser.parse(testVector.expression)
             }
         }
     }
@@ -43,7 +43,7 @@ class ExpressionParserTest: XCTestCase {
     func testParseUsingLogicalOrAsDefaultOperator() {
         self.parser.logicalOrByDefault = true
 
-        let result = self.parser.parse("a and b c and d")
+        let result = self.parser.parse("a and b c and d")!
         XCTAssertEqual(
             "((a AND b) OR (c AND d))",
             self.renderer.render(result)
@@ -52,8 +52,8 @@ class ExpressionParserTest: XCTestCase {
 
     func testParseWithSourceCapture() {
         let lexer = Lexer()
-        let tokens = lexer.lex("a AND (b OR c) AND NOT p*")
-        let result = self.parser.parseTokens(tokens)
+        let tokens = lexer.lex("a AND (b OR c) AND NOT p*")!
+        let result = self.parser.parseTokens(tokens)!
 
         XCTAssertEqual(tokens[0], result.firstToken())
         XCTAssertEqual(tokens[9], result.lastToken())

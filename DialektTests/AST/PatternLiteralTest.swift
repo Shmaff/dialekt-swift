@@ -13,7 +13,7 @@ class PatternLiteralTest: XCTestCase {
 
     func testPerformanceString() {
         self.measure() {
-            let string = self.node.string()
+            _ = self.node.string()
         }
     }
 
@@ -26,7 +26,7 @@ class PatternLiteralTest: XCTestCase {
 
     func testPerformanceAcceptVisitorProtocol() {
         self.measure() {
-            let result = self.node.accept(self.mockVisitor)
+            _ = self.node.accept(self.mockVisitor)
         }
     }
 
@@ -39,7 +39,7 @@ class PatternLiteralTest: XCTestCase {
 
     func testPerformanceAcceptPatternChildVisitorProtocol() {
         self.measure() {
-            let result = self.node.accept(self.mockPatternChildVisitor)
+            _ = self.node.accept(self.mockPatternChildVisitor)
         }
     }
 }

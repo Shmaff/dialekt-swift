@@ -8,7 +8,7 @@ class PatternTest: XCTestCase {
     let mockExpressionVisitor = MockExpressionVisitorProtocol()
 
     func testInit() {
-        var test = Dialekt.Pattern(
+        let test = Dialekt.Pattern(
             [
                 PatternLiteral("foo"),
                 PatternWildcard(),
@@ -20,7 +20,7 @@ class PatternTest: XCTestCase {
     }
 
     func testConvienceInit() {
-        var test = Dialekt.Pattern(
+        let test = Dialekt.Pattern(
             PatternLiteral("foo"),
             PatternWildcard(),
             PatternLiteral("bar")
@@ -35,7 +35,7 @@ class PatternTest: XCTestCase {
 
     func testPerformanceDefaults() {
         self.measure() {
-            let empty = self.expression.children().isEmpty
+            _ = self.expression.children().isEmpty
         }
     }
 
@@ -53,7 +53,7 @@ class PatternTest: XCTestCase {
 
     func testPerformanceAdd() {
         let child = PatternLiteral("bar")
-        self.measureBlock() {
+        self.measure() {
             self.expression.add(child)
         }
     }
@@ -67,7 +67,7 @@ class PatternTest: XCTestCase {
 
     func testPerformanceAcceptVisitorProtocol() {
         self.measure() {
-            let result = self.expression.accept(self.mockVisitor)
+            _ = self.expression.accept(self.mockVisitor)
         }
     }
 
@@ -80,7 +80,7 @@ class PatternTest: XCTestCase {
 
     func testPerformanceAcceptExpressionVisitorProtocol() {
         self.measure() {
-            let result = self.expression.accept(self.mockExpressionVisitor)
+            _ = self.expression.accept(self.mockExpressionVisitor)
         }
     }
 }

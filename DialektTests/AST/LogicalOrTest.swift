@@ -16,7 +16,7 @@ class LogicalOrTest: XCTestCase {
 
     func testPerformanceAcceptVisitorProtocol() {
         self.measure() {
-            let result = self.expression.accept(self.mockVisitor)
+            _ = self.expression.accept(self.mockVisitor)
         }
     }
 
@@ -29,7 +29,7 @@ class LogicalOrTest: XCTestCase {
 
     func testPerformanceAcceptExpressionVisitorProtocol() {
         self.measure() {
-            let result = self.expression.accept(self.mockExpressionVisitor)
+            _ = self.expression.accept(self.mockExpressionVisitor)
         }
     }
 }

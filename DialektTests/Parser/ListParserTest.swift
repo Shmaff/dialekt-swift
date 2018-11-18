@@ -19,7 +19,7 @@ class ListParserTest: XCTestCase {
 
             XCTAssertEqual(
                 self.renderer.render(testVector.expectedResult),
-                self.renderer.render(result),
+                self.renderer.render(result!),
                 testVector.name
             )
         }
@@ -28,7 +28,7 @@ class ListParserTest: XCTestCase {
     func testPerformanceParse() {
         self.measure() {
             for testVector in self.parseTestVectors() {
-                let result = self.parser.parse(testVector.expression)
+                _ = self.parser.parse(testVector.expression)
             }
         }
     }
@@ -48,7 +48,7 @@ class ListParserTest: XCTestCase {
     func testPerformanceParseAsArray() {
         self.measure() {
             for testVector in self.parseTestVectors() {
-                let result = self.parser.parseAsArray(testVector.expression)
+                _ = self.parser.parseAsArray(testVector.expression)
             }
         }
     }
@@ -65,8 +65,8 @@ class ListParserTest: XCTestCase {
 
     func testTokens() {
         let lexer = Lexer()
-        let tokens = lexer.lex("a b c")
-        let result = self.parser.parseTokens(tokens) as LogicalAnd
+        let tokens = lexer.lex("a b c")!
+        let result = self.parser.parseTokens(tokens) as! LogicalAnd
 
         XCTAssertEqual(tokens[0], result.firstToken())
         XCTAssertEqual(tokens[2], result.lastToken())

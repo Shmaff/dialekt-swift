@@ -12,14 +12,14 @@ class AbstractExpressionTest: XCTestCase {
 
     func testPerformanceDefaults() {
         self.measure() {
-            self.node.firstToken()
-            self.node.lastToken()
+            _ = self.node.firstToken()
+            _ = self.node.lastToken()
         }
     }
 
     func testSetTokens() {
-        let firstToken = Token(TokenType.Text, "first", 0, 1, 2, 3)
-        let lastToken = Token(TokenType.Text, "last", 4, 5, 6, 7)
+        let firstToken = Token(TokenType.text, "first", 0, 1, 2, 3)
+        let lastToken = Token(TokenType.text, "last", 4, 5, 6, 7)
 
         self.node.setTokens(firstToken, lastToken)
 
@@ -28,12 +28,12 @@ class AbstractExpressionTest: XCTestCase {
     }
 
     func testPerformanceSetTokens() {
-        let firstToken = Token(TokenType.Text, "first", 0, 1, 2, 3)
-        let lastToken = Token(TokenType.Text, "last", 4, 5, 6, 7)
+        let firstToken = Token(TokenType.text, "first", 0, 1, 2, 3)
+        let lastToken = Token(TokenType.text, "last", 4, 5, 6, 7)
 
         self.node.setTokens(firstToken, lastToken)
 
-        self.measureBlock() {
+        self.measure() {
             self.node.setTokens(firstToken, lastToken)
         }
     }

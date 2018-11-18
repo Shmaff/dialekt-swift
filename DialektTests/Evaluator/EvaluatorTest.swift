@@ -22,7 +22,7 @@ class EvaluatorTest: XCTestCase {
         self.evaluator = Evaluator()
         self.measure() {
             for testVector in self.evaluateTestVectors() {
-                let result = self.evaluator.evaluate(
+                _ = self.evaluator.evaluate(
                     testVector.expression,
                     tags: testVector.tags
                 )
@@ -55,7 +55,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator(caseSensitive: true)
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )
@@ -94,7 +94,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator(caseSensitive: true)
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )
@@ -118,7 +118,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator(caseSensitive: false, emptyIsWildcard: true)
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )
@@ -183,7 +183,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator()
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )
@@ -248,7 +248,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator()
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )
@@ -290,7 +290,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator()
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )
@@ -325,7 +325,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator()
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )
@@ -366,7 +366,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator()
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )
@@ -401,7 +401,7 @@ class EvaluatorTest: XCTestCase {
 
         self.evaluator = Evaluator()
         self.measure() {
-            let result = self.evaluator.evaluate(
+            _ = self.evaluator.evaluate(
                 expression,
                 tags: tagList
             )

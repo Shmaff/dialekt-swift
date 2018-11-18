@@ -47,7 +47,7 @@ class AbstractPolyadicExpressionTest: XCTestCase {
     func testPerformanceAdd() {
         let emptyExpression = EmptyExpression()
 
-        self.measureBlock() {
+        self.measure() {
             self.node.add(emptyExpression)
         }
     }

@@ -5,7 +5,7 @@ class TokenTest: XCTestCase {
 
     func testConstructor() {
         let token = Token(
-            TokenType.Text,
+            TokenType.text,
             "foo",
             1,
             2,
@@ -13,7 +13,7 @@ class TokenTest: XCTestCase {
             4
         )
 
-        XCTAssertEqual(TokenType.Text, token.tokenType)
+        XCTAssertEqual(TokenType.text, token.tokenType)
         XCTAssertEqual("foo", token.value)
         XCTAssertEqual(1, token.startOffset)
         XCTAssertEqual(2, token.endOffset)
@@ -30,27 +30,27 @@ class TokenTest: XCTestCase {
     func descriptionTestVectors() -> [DescriptionTestVector] {
         return [
             DescriptionTestVector(
-                tokenType: .LogicalAnd,
+                tokenType: .logicalAnd,
                 description: "AND operator"
             ),
             DescriptionTestVector(
-                tokenType: .LogicalOr,
+                tokenType: .logicalOr,
                 description: "OR operator"
             ),
             DescriptionTestVector(
-                tokenType: .LogicalNot,
+                tokenType: .logicalNot,
                 description: "NOT operator"
             ),
             DescriptionTestVector(
-                tokenType: .Text,
+                tokenType: .text,
                 description: "tag"
             ),
             DescriptionTestVector(
-                tokenType: .OpenBracket,
+                tokenType: .openBracket,
                 description: "open bracket"
             ),
             DescriptionTestVector(
-                tokenType: .CloseBracket,
+                tokenType: .closeBracket,
                 description: "close bracket"
             )
         ]
