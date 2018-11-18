@@ -35,12 +35,11 @@ open class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChild
             if !result.isMatch() {
                 isMatch = false
             }
-
-            matchedTags.extend( // Value of type '[String]' has no member 'extend'
-                result.matchedTags().filter() {
-                    !matchedTags.contains($0)
-                }
-            )
+            
+            let mt = result.matchedTags()
+            for i in 0..<mt.count {
+                matchedTags.append(mt[i])
+            }
         }
 
         let unmatchedTags = _tags.filter() {
@@ -61,17 +60,16 @@ open class Evaluator: EvaluatorProtocol, ExpressionVisitorProtocol, PatternChild
         var isMatch = false
 
         for n in node.children() {
-            var result = n.accept(self)
+            let result = n.accept(self)
 
             if result.isMatch() {
                 isMatch = true
             }
 
-            matchedTags.extend( // Value of type '[String]' has no member 'extend'
-                result.matchedTags().filter() {
-                    !matchedTags.contains($0)
-                }
-            )
+            let mt = result.matchedTags()
+            for i in 0..<mt.count {
+                matchedTags.append(mt[i])
+            }
         }
 
         let unmatchedTags = _tags.filter() {
